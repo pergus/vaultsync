@@ -55,7 +55,7 @@ type netbox struct {
 
 func (nb *netbox) UpdateSecret(id string, fieldName string, value interface{}) {
 	// Implementation to update variables based on secret changes.
-    // See example/main.go for sample implementation.
+	// See example/main.go for sample implementation.
 }
 ```
 
