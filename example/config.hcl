@@ -1,7 +1,7 @@
 config {
   server                = "http://localhost:8200"
   authmethod            = "userpass"
-  username              = "username"
-  password              = "password"
+  username              = "go"
+  password              = "secret"
   renew_secrets_period  = 30
 }

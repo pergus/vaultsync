@@ -92,7 +92,7 @@ func main() {
 	defer file.Close()
 
 	logger := slog.New(slog.NewJSONHandler(file, loggerOpts))
-	agent, err := vaultsync.New(vaultsync.WithConfigFile("config.hcl"), vaultsync.WithLogLevel("info"), vaultsync.WithLogger(logger))
+	vs, err := vaultsync.New(vaultsync.WithConfigFile("config.hcl"), vaultsync.WithLogLevel("info"), vaultsync.WithLogger(logger))
 	if err != nil {
 		logger.Error("main", slog.Any("error", err))
 		return
@@ -100,13 +100,13 @@ func main() {
 
 	logger.Info("main", slog.String("status", "starting"))
 
-	agent.RegisterUpdateSecret(redis.id, redis)
-	agent.RegisterUpdateSecret(netbox.id, netbox)
+	vs.RegisterUpdateSecret(redis.id, redis)
+	vs.RegisterUpdateSecret(netbox.id, netbox)
 	ctx, cancel := context.WithCancel(context.Background())
 
 	// Create a WaitGroup to wait for all workers to finish
 	var wg sync.WaitGroup
-	agent.Run(ctx, &wg)
+	vs.Run(ctx, &wg)
 
 	fmt.Printf("redis.user:%v\n", redis.user)
 	fmt.Printf("redis.password:%v\n", redis.password)
