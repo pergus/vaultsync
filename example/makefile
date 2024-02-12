@@ -1,5 +1,8 @@
+run: build
+	./example.exe
 
-build:
+build: 
 	go mod tidy
-	go build -o vaultsync.exe
+	go build -o example.exe
+
 

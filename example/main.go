@@ -84,7 +84,7 @@ func main() {
 	logLevelVar.Set(slog.LevelInfo) // Set debug as default.
 
 	// Open the log file for writing. Create it if it doesn't exist.
-	file, err := os.OpenFile("secretsync.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	file, err := os.OpenFile("example.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		fmt.Println("Error opening log file:", err)
 		return
@@ -109,7 +109,10 @@ func main() {
 	agent.Run(ctx, &wg)
 
 	fmt.Printf("redis.user:%v\n", redis.user)
+	fmt.Printf("redis.password:%v\n", redis.password)
 	fmt.Printf("netbox.user:%v\n", netbox.user)
+	fmt.Printf("nextbox.password:%v\n", netbox.password)
+	fmt.Printf("\n")
 
 	rl, err := readline.New("> ")
 	if err != nil {
