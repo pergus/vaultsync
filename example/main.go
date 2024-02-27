@@ -108,11 +108,15 @@ func main() {
 	var wg sync.WaitGroup
 	vs.Run(ctx, &wg)
 
+	redis.mu.Lock()
+	netbox.mu.Lock()
 	fmt.Printf("redis.user:%v\n", redis.user)
 	fmt.Printf("redis.password:%v\n", redis.password)
 	fmt.Printf("netbox.user:%v\n", netbox.user)
 	fmt.Printf("nextbox.password:%v\n", netbox.password)
 	fmt.Printf("\n")
+	netbox.mu.Unlock()
+	redis.mu.Unlock()
 
 	rl, err := readline.New("> ")
 	if err != nil {
@@ -130,13 +134,17 @@ func main() {
 			break
 		}
 		if line == "redis" {
+			redis.mu.Lock()
 			fmt.Printf("redis.user:%v\n", redis.user)
 			fmt.Printf("redis.password:%v\n", redis.password)
+			redis.mu.Unlock()
 			continue
 		}
 		if line == "netbox" {
+			netbox.mu.Lock()
 			fmt.Printf("netbox.user:%v\n", netbox.user)
 			fmt.Printf("netbox.password:%v\n", netbox.password)
+			netbox.mu.Unlock()
 			continue
 		}
 
