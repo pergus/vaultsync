@@ -108,6 +108,8 @@ func main() {
 	var wg sync.WaitGroup
 	vs.Run(ctx, &wg)
 
+	// After the call to Run() access to secrets has to be protected by mutex locks.
+
 	redis.mu.Lock()
 	netbox.mu.Lock()
 	fmt.Printf("redis.user:%v\n", redis.user)
